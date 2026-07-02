@@ -1,0 +1,204 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.9);
+    border-bottom: 1px solid gold;
+    z-index: 100;
+}
+
+.logo {
+    color: gold;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 16px;
+}
+
+.nav-links a:hover {
+    color: gold;
+}
+
+.btn-nav {
+    background-color: gold;
+    color: black !important;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.badge {
+    background-color: #1a1a1a;
+    border: 1px solid gold;
+    color: gold;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 72px;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero h1 span {
+    color: gold;
+}
+
+.hero p {
+    font-size: 22px;
+    color: #aaaaaa;
+    margin-bottom: 40px;
+    max-width: 600px;
+}
+
+.form-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-container input {
+    padding: 18px 25px;
+    font-size: 16px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: #1a1a1a;
+    color: white;
+    width: 350px;
+    outline: none;
+}
+
+.form-container input:focus {
+    border-color: gold;
+}
+
+button {
+    background-color: gold;
+    color: black;
+    font-size: 18px;
+    padding: 18px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: white;
+    transform: scale(1.05);
+    transition: 0.2s;
+}
+
+#message {
+    font-size: 18px;
+    margin-top: 10px;
+    height: 25px;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 100px 60px;
+    background-color: #111111;
+}
+
+.feature {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    width: 280px;
+    border: 1px solid #333;
+}
+
+.feature h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: gold;
+}
+
+.feature p {
+    color: #aaaaaa;
+    font-size: 16px;
+}
+
+.inscrits {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #0f0f0f;
+}
+
+.inscrits h2 {
+    color: gold;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+#liste-emails {
+    list-style: none;
+    font-size: 16px;
+    color: #aaaaaa;
+}
+
+#liste-emails li {
+    margin: 8px 0;
+}
+
+.cta {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.cta h2 {
+    font-size: 48px;
+    color: gold;
+    margin-bottom: 20px;
+}
+
+.cta p {
+    font-size: 20px;
+    color: #aaaaaa;
+    margin-bottom: 40px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #555555;
+    border-top: 1px solid #222;
+}

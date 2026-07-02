@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>LucasApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">LucasApp</div>
+        <div class="nav-links">
+            <a href="#">Accueil</a>
+            <a href="#">Fonctionnalités</a>
+            <a href="#">Tarifs</a>
+            <a href="#" class="btn-nav">Commencer</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="badge">🔥 Plus de <span id="compteur">0</span> personnes inscrites</div>
+        <h1>Le futur commence <span>maintenant</span></h1>
+        <p>La solution qui va changer ta vie. Simple. Puissant. Révolutionnaire.</p>
+        <div class="form-container">
+            <input type="email" id="email-input" placeholder="Ton adresse email...">
+            <button onclick="inscrire()">Rejoindre 🚀</button>
+        </div>
+        <div id="message"></div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <h2>⚡ Rapide</h2>
+            <p>Résultats instantanés, zéro perte de temps.</p>
+        </div>
+        <div class="feature">
+            <h2>🔒 Sécurisé</h2>
+            <p>Tes données sont protégées à 100%.</p>
+        </div>
+        <div class="feature">
+            <h2>🌍 Mondial</h2>
+            <p>Disponible partout dans le monde.</p>
+        </div>
+    </section>
+
+    <section class="inscrits" id="liste-section">
+        <h2>Liste d'attente</h2>
+        <ul id="liste-emails"></ul>
+    </section>
+
+    <section class="cta">
+        <h2>Prêt à changer ta vie ?</h2>
+        <p>Rejoins des milliers d'utilisateurs qui font confiance à LucasApp.</p>
+        <button onclick="document.getElementById('email-input').focus()">Commencer gratuitement 🔥</button>
+    </section>
+
+    <footer>
+        <p>© 2026 LucasApp. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        let emails = [];
+        let compteur = 1247;
+
+        document.getElementById('compteur').textContent = compteur;
+
+        function inscrire() {
+            const input = document.getElementById('email-input');
+            const email = input.value.trim();
+            const message = document.getElementById('message');
+
+            if (email === '') {
+                message.textContent = '❌ Entre ton email !';
+                message.style.color = 'red';
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                message.textContent = '❌ Email invalide !';
+                message.style.color = 'red';
+                return;
+            }
+
+            if (emails.includes(email)) {
+                message.textContent = '⚠️ Cet email est déjà inscrit !';
+                message.style.color = 'orange';
+                return;
+            }
+
+            emails.push(email);
+            compteur++;
+            document.getElementById('compteur').textContent = compteur;
+
+            const liste = document.getElementById('liste-emails');
+            const item = document.createElement('li');
+            item.textContent = '✅ ' + email;
+            liste.appendChild(item);
+
+            message.textContent = '🔥 Bienvenue dans l\'aventure !';
+            message.style.color = 'gold';
+            input.value = '';
+        }
+    </script>
+
+</body>
+</html>
