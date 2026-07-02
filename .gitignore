@@ -1,0 +1,5 @@
+# Dependencies
+node_modules/
+
+# Build artifacts (keeping analytics.bundle.js as it needs to be deployed)
+# analytics.bundle.js is intentionally NOT ignored as it's needed for deployment
