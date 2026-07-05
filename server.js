@@ -1,13 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
-
 const app = express();
-const resend = new Resend(const resend = new Resend(process.env.RESEND_API_KEY););
-
+const resend = new Resend(process.env.RESEND_API_KEY);
 app.use(cors());
 app.use(express.json());
-
 app.post('/inscription', async (req, res) => {
     const { email } = req.body;
 
