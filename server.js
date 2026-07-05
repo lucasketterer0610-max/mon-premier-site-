@@ -22,6 +22,7 @@ app.post('/inscription', async (req, res) => {
     res.json({ succès: true });
 });
 app.use(express.static('.'));
-app.listen(3000, () => {
-    console.log('Serveur démarré sur le port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Serveur démarré sur le port ${PORT}`);
 });
