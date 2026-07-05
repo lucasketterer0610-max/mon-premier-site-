@@ -64,42 +64,45 @@
 
         document.getElementById('compteur').textContent = compteur;
 
-        function inscrire() {
-            const input = document.getElementById('email-input');
-            const email = input.value.trim();
-            const message = document.getElementById('message');
+        async function inscrire() {
+    const input = document.getElementById('email-input');
+    const email = input.value.trim();
+    const message = document.getElementById('message');
 
-            if (email === '') {
-                message.textContent = '❌ Entre ton email !';
-                message.style.color = 'red';
-                return;
-            }
+    if (email === '') {
+        message.textContent = '❌ Entre ton email !';
+        message.style.color = 'red';
+        return;
+    }
 
-            if (!email.includes('@') || !email.includes('.')) {
-                message.textContent = '❌ Email invalide !';
-                message.style.color = 'red';
-                return;
-            }
+    if (!email.includes('@') || !email.includes('.')) {
+        message.textContent = '❌ Email invalide !';
+        message.style.color = 'red';
+        return;
+    }
 
-            if (emails.includes(email)) {
-                message.textContent = '⚠️ Cet email est déjà inscrit !';
-                message.style.color = 'orange';
-                return;
-            }
+    try {
+        const response = await fetch('https://mon-premier-site-production.up.railway.app/inscription', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
 
-            emails.push(email);
+        const data = await response.json();
+
+        if (data.succès) {
             compteur++;
             document.getElementById('compteur').textContent = compteur;
-
-            const liste = document.getElementById('liste-emails');
-            const item = document.createElement('li');
-            item.textContent = '✅ ' + email;
-            liste.appendChild(item);
-
             message.textContent = '🔥 Bienvenue dans l\'aventure !';
             message.style.color = 'gold';
             input.value = '';
         }
+    } catch (error) {
+        message.textContent = '❌ Erreur, réessaie !';
+        message.style.color = 'red';
+    }
+}
+        
     </script>
 
 </body>
