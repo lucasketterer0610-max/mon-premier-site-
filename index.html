@@ -19,9 +19,9 @@
 
     <section class="hero">
         <div class="badge">🔥 Plus de <span id="compteur">0</span> personnes inscrites</div>
-        <h1>Le futur commence <span>maintenant</span></h1>
-        <p>La solution qui va changer ta vie. Simple. Puissant. Révolutionnaire.</p>
-        <div class="form-container">
+        <h1 class="animate-title">Le futur commence <span>maintenant</span></h1>
+        <p class="animate-subtitle">La solution qui va changer ta vie. Simple. Puissant. Révolutionnaire.</p>
+        <div class="form-container animate-form">
             <input type="email" id="email-input" placeholder="Ton adresse email...">
             <button onclick="inscrire()">Rejoindre 🚀</button>
         </div>
@@ -29,26 +29,39 @@
     </section>
 
     <section class="features">
-        <div class="feature">
-            <h2>⚡ Rapide</h2>
+        <div class="feature scroll-reveal">
+            <div class="feature-icon">⚡</div>
+            <h2>Rapide</h2>
             <p>Résultats instantanés, zéro perte de temps.</p>
         </div>
-        <div class="feature">
-            <h2>🔒 Sécurisé</h2>
+        <div class="feature scroll-reveal">
+            <div class="feature-icon">🔒</div>
+            <h2>Sécurisé</h2>
             <p>Tes données sont protégées à 100%.</p>
         </div>
-        <div class="feature">
-            <h2>🌍 Mondial</h2>
+        <div class="feature scroll-reveal">
+            <div class="feature-icon">🌍</div>
+            <h2>Mondial</h2>
             <p>Disponible partout dans le monde.</p>
         </div>
     </section>
 
-    <section class="inscrits" id="liste-section">
-        <h2>Liste d'attente</h2>
-        <ul id="liste-emails"></ul>
+    <section class="stats scroll-reveal">
+        <div class="stat">
+            <h2>1,247+</h2>
+            <p>Utilisateurs inscrits</p>
+        </div>
+        <div class="stat">
+            <h2>99.9%</h2>
+            <p>Disponibilité</p>
+        </div>
+        <div class="stat">
+            <h2>24/7</h2>
+            <p>Support</p>
+        </div>
     </section>
 
-    <section class="cta">
+    <section class="cta scroll-reveal">
         <h2>Prêt à changer ta vie ?</h2>
         <p>Rejoins des milliers d'utilisateurs qui font confiance à LucasApp.</p>
         <button onclick="document.getElementById('email-input').focus()">Commencer gratuitement 🔥</button>
@@ -59,50 +72,71 @@
     </footer>
 
     <script>
-        let emails = [];
         let compteur = 1247;
-
         document.getElementById('compteur').textContent = compteur;
 
-        async function inscrire() {
-    const input = document.getElementById('email-input');
-    const email = input.value.trim();
-    const message = document.getElementById('message');
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
 
-    if (email === '') {
-        message.textContent = '❌ Entre ton email !';
-        message.style.color = 'red';
-        return;
-    }
-
-    if (!email.includes('@') || !email.includes('.')) {
-        message.textContent = '❌ Email invalide !';
-        message.style.color = 'red';
-        return;
-    }
-
-    try {
-        const response = await fetch('https://mon-premier-site-production.up.railway.app/inscription', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
         });
 
-        const data = await response.json();
+        // Animation hero au chargement
+        setTimeout(() => {
+            document.querySelector('.animate-title').classList.add('visible');
+        }, 100);
+        setTimeout(() => {
+            document.querySelector('.animate-subtitle').classList.add('visible');
+        }, 300);
+        setTimeout(() => {
+            document.querySelector('.animate-form').classList.add('visible');
+        }, 500);
 
-        if (data.succès) {
-            compteur++;
-            document.getElementById('compteur').textContent = compteur;
-            message.textContent = '🔥 Bienvenue dans l\'aventure !';
-            message.style.color = 'gold';
-            input.value = '';
+        async function inscrire() {
+            const input = document.getElementById('email-input');
+            const email = input.value.trim();
+            const message = document.getElementById('message');
+
+            if (email === '') {
+                message.textContent = '❌ Entre ton email !';
+                message.style.color = 'red';
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                message.textContent = '❌ Email invalide !';
+                message.style.color = 'red';
+                return;
+            }
+
+            try {
+                const response = await fetch('https://mon-premier-site-production.up.railway.app/inscription', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (data.succès) {
+                    compteur++;
+                    document.getElementById('compteur').textContent = compteur;
+                    message.textContent = '🔥 Bienvenue dans l\'aventure !';
+                    message.style.color = '#FFD700';
+                    input.value = '';
+                }
+            } catch (error) {
+                message.textContent = '❌ Erreur, réessaie !';
+                message.style.color = 'red';
+            }
         }
-    } catch (error) {
-        message.textContent = '❌ Erreur, réessaie !';
-        message.style.color = 'red';
-    }
-}
-        
     </script>
 
 </body>
