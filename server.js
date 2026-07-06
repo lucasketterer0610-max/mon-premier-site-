@@ -1,14 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_KEY
+);
 
 app.use(cors());
 app.use(express.json());
-
-let emailsInscrits = [];
 
 app.post('/inscription', async (req, res) => {
     const { email } = req.body;
@@ -17,7 +20,7 @@ app.post('/inscription', async (req, res) => {
         return res.status(400).json({ erreur: 'Email manquant' });
     }
 
-    emailsInscrits.push(email);
+    await supabase.from('emails').insert({ email });
 
     await resend.emails.send({
         from: 'onboarding@resend.dev',
@@ -29,8 +32,9 @@ app.post('/inscription', async (req, res) => {
     res.json({ succès: true });
 });
 
-app.get('/emails', (req, res) => {
-    res.json({ emails: emailsInscrits });
+app.get('/emails', async (req, res) => {
+    const { data } = await supabase.from('emails').select('email');
+    res.json({ emails: data.map(row => row.email) });
 });
 
 app.use(express.static('.'));
