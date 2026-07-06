@@ -201,4 +201,48 @@ footer {
     padding: 30px;
     color: #555555;
     border-top: 1px solid #222;
+}.dashboard {
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px 20px 20px;
+    margin-top: 80px;
+}
+
+.stat-card {
+    background-color: #1a1a1a;
+    border: 1px solid gold;
+    border-radius: 12px;
+    padding: 40px 80px;
+    text-align: center;
+}
+
+.stat-card h2 {
+    font-size: 72px;
+    color: gold;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    color: #aaaaaa;
+    font-size: 18px;
+}
+
+.emails-list {
+    padding: 40px 60px;
+}
+
+.emails-list h2 {
+    color: gold;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.email-item {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 16px;
 }

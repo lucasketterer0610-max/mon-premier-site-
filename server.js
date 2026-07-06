@@ -1,16 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const { Resend } = require('resend');
+
 const app = express();
 const resend = new Resend(process.env.RESEND_API_KEY);
+
 app.use(cors());
 app.use(express.json());
+
+let emailsInscrits = [];
+
 app.post('/inscription', async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
         return res.status(400).json({ erreur: 'Email manquant' });
     }
+
+    emailsInscrits.push(email);
 
     await resend.emails.send({
         from: 'onboarding@resend.dev',
@@ -21,7 +28,13 @@ app.post('/inscription', async (req, res) => {
 
     res.json({ succès: true });
 });
+
+app.get('/emails', (req, res) => {
+    res.json({ emails: emailsInscrits });
+});
+
 app.use(express.static('.'));
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur le port ${PORT}`);
