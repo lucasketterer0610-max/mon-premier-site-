@@ -37,6 +37,36 @@ app.get('/emails', async (req, res) => {
     res.json({ emails: data.map(row => row.email) });
 });
 
+app.post('/signup', async (req, res) => {
+    const { email, password } = req.body;
+
+    const { data, error } = await supabase.auth.signUp({
+        email,
+        password
+    });
+
+    if (error) {
+        return res.json({ succès: false, erreur: error.message });
+    }
+
+    res.json({ succès: true, user: data.user });
+});
+
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+    });
+
+    if (error) {
+        return res.json({ succès: false, erreur: error.message });
+    }
+
+    res.json({ succès: true, user: data.user });
+});
+
 app.use(express.static('.'));
 
 const PORT = process.env.PORT || 3000;
