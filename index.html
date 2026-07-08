@@ -7,6 +7,13 @@
 </head>
 <body>
 
+    <!-- Curseur personnalisé -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Particules -->
+    <canvas id="particles"></canvas>
+
     <nav>
         <div class="logo">Lucas<span>App</span></div>
         <div class="nav-links">
@@ -19,8 +26,8 @@
 
     <section class="hero">
         <div class="badge">🔥 Plus de <span id="compteur">0</span> personnes inscrites</div>
-        <h1 class="animate-title">Le futur commence <span>maintenant</span></h1>
-        <p class="animate-subtitle">La solution qui va changer ta vie. Simple. Puissant. Révolutionnaire.</p>
+        <h1>Le futur commence<br><span id="typed-text"></span><span class="cursor-blink">|</span></h1>
+        <p class="animate-subtitle">La solution qui va changer ta vie.<br>Simple. Puissant. Révolutionnaire.</p>
         <div class="form-container animate-form">
             <input type="email" id="email-input" placeholder="Ton adresse email...">
             <button onclick="inscrire()">Rejoindre 🚀</button>
@@ -46,16 +53,16 @@
         </div>
     </section>
 
-    <section class="stats scroll-reveal">
-        <div class="stat">
-            <h2>1,247+</h2>
+    <section class="stats">
+        <div class="stat scroll-reveal">
+            <h2 class="count" data-target="1247">0</h2>
             <p>Utilisateurs inscrits</p>
         </div>
-        <div class="stat">
+        <div class="stat scroll-reveal">
             <h2>99.9%</h2>
             <p>Disponibilité</p>
         </div>
-        <div class="stat">
+        <div class="stat scroll-reveal">
             <h2>24/7</h2>
             <p>Support</p>
         </div>
@@ -72,33 +79,152 @@
     </footer>
 
     <script>
-        let compteur = 1247;
-        document.getElementById('compteur').textContent = compteur;
+        // CURSEUR PERSONNALISÉ
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
 
-        // Animation au scroll
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 80);
+        });
+
+        document.querySelectorAll('button, a, input').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                follower.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // PARTICULES
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2 + 0.5,
+                opacity: Math.random() * 0.5 + 0.1
+            });
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
+                ctx.fill();
+            });
+
+            // Lignes entre particules proches
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(255, 215, 0, ${0.1 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // TEXTE QUI S'ÉCRIT
+        const words = ['maintenant', 'aujourd\'hui', 'avec toi'];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
+
+        function typeWriter() {
+            const el = document.getElementById('typed-text');
+            const word = words[wordIndex];
+
+            if (!deleting) {
+                el.textContent = word.slice(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === word.length) {
+                    deleting = true;
+                    setTimeout(typeWriter, 1500);
+                    return;
+                }
+            } else {
+                el.textContent = word.slice(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    deleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                }
+            }
+            setTimeout(typeWriter, deleting ? 50 : 100);
+        }
+        setTimeout(typeWriter, 1000);
+
+        // COMPTEUR ANIMÉ
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+
+                    if (entry.target.classList.contains('count')) {
+                        const target = parseInt(entry.target.dataset.target);
+                        let count = 0;
+                        const step = target / 60;
+                        const timer = setInterval(() => {
+                            count += step;
+                            if (count >= target) {
+                                count = target;
+                                clearInterval(timer);
+                            }
+                            entry.target.textContent = Math.floor(count).toLocaleString() + '+';
+                        }, 30);
+                    }
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
+        document.querySelectorAll('.scroll-reveal, .count').forEach(el => {
             observer.observe(el);
         });
 
-        // Animation hero au chargement
-        setTimeout(() => {
-            document.querySelector('.animate-title').classList.add('visible');
-        }, 100);
-        setTimeout(() => {
-            document.querySelector('.animate-subtitle').classList.add('visible');
-        }, 300);
-        setTimeout(() => {
-            document.querySelector('.animate-form').classList.add('visible');
-        }, 500);
+        // COMPTEUR BADGE
+        let compteur = 1247;
+        document.getElementById('compteur').textContent = compteur.toLocaleString();
 
+        // ANIMATIONS HERO
+        setTimeout(() => document.querySelector('.animate-subtitle').classList.add('visible'), 400);
+        setTimeout(() => document.querySelector('.animate-form').classList.add('visible'), 700);
+
+        // INSCRIPTION
         async function inscrire() {
             const input = document.getElementById('email-input');
             const email = input.value.trim();
@@ -127,7 +253,7 @@
 
                 if (data.succès) {
                     compteur++;
-                    document.getElementById('compteur').textContent = compteur;
+                    document.getElementById('compteur').textContent = compteur.toLocaleString();
                     message.textContent = '🔥 Bienvenue dans l\'aventure !';
                     message.style.color = '#FFD700';
                     input.value = '';
