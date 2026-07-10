@@ -127,7 +127,12 @@
                 const data = await response.json();
 
                 if (data.succès) {
-                    message.textContent = modeInscription ? '🔥 Compte créé !' : '✅ Connecté !';
+                    message.textContent = modeInscription ? '🔥 Compte créé !' : '✅ Connecté ! Redirection...';
+if (!modeInscription) {
+    setTimeout(() => {
+        window.location.href = 'index.html';
+    }, 1000);
+}
                     message.style.color = '#FFD700';
                 } else {
                     message.textContent = '❌ ' + (data.erreur || 'Erreur');
