@@ -2,87 +2,88 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>LucasApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Sportif Football Personnalisé à Cannes | LucasApp Coaching</title>
+    <meta name="description" content="Coach sportif football personnalisé à Cannes. Programmes d'entraînement sur-mesure pour progresser rapidement, quel que soit ton niveau. Réserve ta première séance dès aujourd'hui.">
+    <meta name="keywords" content="coach sportif football Cannes, coach football personnalisé, entraînement foot Cannes, préparation physique football">
+    <link rel="canonical" href="https://mon-premier-site-seven.vercel.app/">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Curseur personnalisé -->
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
-
-    <!-- Particules -->
     <canvas id="particles"></canvas>
 
     <nav>
-        <div class="logo">Lucas<span>App</span></div>
+        <div class="logo">Lucas<span>Coach</span></div>
         <div class="nav-links">
-            <a href="#">Accueil</a>
-            <a href="#">Fonctionnalités</a>
-            <a href="#">Tarifs</a>
-            <a href="#" class="btn-nav">Commencer</a>
+            <a href="#accueil">Accueil</a>
+            <a href="#services">Programmes</a>
+            <a href="#tarifs">Tarifs</a>
+            <a href="#contact" class="btn-nav">Réserver une séance</a>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="badge">🔥 Plus de <span id="compteur">0</span> personnes inscrites</div>
-        <h1>Le futur commence<br><span id="typed-text"></span><span class="cursor-blink">|</span></h1>
-        <p class="animate-subtitle">La solution qui va changer ta vie.<br>Simple. Puissant. Révolutionnaire.</p>
-        <div class="form-container animate-form">
+    <section class="hero" id="accueil">
+        <div class="badge">⚽ Coach certifié à Cannes</div>
+        <h1>Coach sportif <span>football personnalisé</span><br>à Cannes</h1>
+        <p>Des programmes d'entraînement sur-mesure pour progresser rapidement, que tu sois débutant ou joueur confirmé. Séances individuelles ou en petit groupe, à Cannes et ses environs.</p>
+        <div class="form-container">
             <input type="email" id="email-input" placeholder="Ton adresse email...">
-            <button onclick="inscrire()">Rejoindre 🚀</button>
+            <button onclick="inscrire()">Réserver ma séance 🚀</button>
         </div>
         <div id="message"></div>
     </section>
 
-    <section class="features">
+    <section class="features" id="services">
         <div class="feature scroll-reveal">
-            <div class="feature-icon">⚡</div>
-            <h2>Rapide</h2>
-            <p>Résultats instantanés, zéro perte de temps.</p>
+            <div class="feature-icon">⚽</div>
+            <h2>Entraînement personnalisé</h2>
+            <p>Un programme de football adapté à ton niveau, tes objectifs et ta disponibilité, conçu spécifiquement pour toi.</p>
         </div>
         <div class="feature scroll-reveal">
-            <div class="feature-icon">🔒</div>
-            <h2>Sécurisé</h2>
-            <p>Tes données sont protégées à 100%.</p>
+            <div class="feature-icon">💪</div>
+            <h2>Préparation physique</h2>
+            <p>Renforcement musculaire, vitesse et endurance spécifiques au football pour progresser sur le terrain.</p>
         </div>
         <div class="feature scroll-reveal">
-            <div class="feature-icon">🌍</div>
-            <h2>Mondial</h2>
-            <p>Disponible partout dans le monde.</p>
+            <div class="feature-icon">📍</div>
+            <h2>Coaching à Cannes</h2>
+            <p>Séances disponibles dans les stades et terrains de Cannes et des communes environnantes.</p>
         </div>
     </section>
 
     <section class="stats">
         <div class="stat scroll-reveal">
-            <h2 class="count" data-target="1247">0</h2>
-            <p>Utilisateurs inscrits</p>
+            <h2 class="count" data-target="150">0</h2>
+            <p>Joueurs coachés à Cannes</p>
         </div>
         <div class="stat scroll-reveal">
-            <h2>99.9%</h2>
-            <p>Disponibilité</p>
+            <h2>5 ans</h2>
+            <p>D'expérience en coaching foot</p>
         </div>
         <div class="stat scroll-reveal">
-            <h2>24/7</h2>
-            <p>Support</p>
+            <h2>100%</h2>
+            <p>Programmes personnalisés</p>
         </div>
     </section>
 
-    <section class="cta scroll-reveal">
-        <h2>Prêt à changer ta vie ?</h2>
-        <p>Rejoins des milliers d'utilisateurs qui font confiance à LucasApp.</p>
-        <button onclick="document.getElementById('email-input').focus()">Commencer gratuitement 🔥</button>
+    <section class="cta scroll-reveal" id="tarifs">
+        <h2>Prêt à progresser sur le terrain ?</h2>
+        <p>Réserve ta première séance de coaching football personnalisé à Cannes dès aujourd'hui.</p>
+        <button onclick="document.getElementById('email-input').focus()">Réserver maintenant 🔥</button>
     </section>
 
-    <footer>
-        <p>© 2026 LucasApp. Tous droits réservés.</p>
+    <footer id="contact">
+        <p>© 2026 LucasCoach — Coach sportif football personnalisé à Cannes</p>
     </footer>
 
     <script>
-        // CURSEUR PERSONNALISÉ
+        let compteur = 1247;
+
         const cursor = document.querySelector('.cursor');
         const follower = document.querySelector('.cursor-follower');
-
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
@@ -92,23 +93,10 @@
             }, 80);
         });
 
-        document.querySelectorAll('button, a, input').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-                follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                follower.style.transform = 'translate(-50%, -50%) scale(1)';
-            });
-        });
-
-        // PARTICULES
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
         const particles = [];
         for (let i = 0; i < 80; i++) {
             particles.push({
@@ -120,7 +108,6 @@
                 opacity: Math.random() * 0.5 + 0.1
             });
         }
-
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
@@ -128,73 +115,23 @@
                 p.y += p.vy;
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 215, 0, ${p.opacity})`;
                 ctx.fill();
             });
-
-            // Lignes entre particules proches
-            particles.forEach((p1, i) => {
-                particles.slice(i + 1).forEach(p2 => {
-                    const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-                    if (dist < 120) {
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(255, 215, 0, ${0.1 * (1 - dist / 120)})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                });
-            });
-
             requestAnimationFrame(drawParticles);
         }
         drawParticles();
-
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
 
-        // TEXTE QUI S'ÉCRIT
-        const words = ['maintenant', 'aujourd\'hui', 'avec toi'];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let deleting = false;
-
-        function typeWriter() {
-            const el = document.getElementById('typed-text');
-            const word = words[wordIndex];
-
-            if (!deleting) {
-                el.textContent = word.slice(0, charIndex + 1);
-                charIndex++;
-                if (charIndex === word.length) {
-                    deleting = true;
-                    setTimeout(typeWriter, 1500);
-                    return;
-                }
-            } else {
-                el.textContent = word.slice(0, charIndex - 1);
-                charIndex--;
-                if (charIndex === 0) {
-                    deleting = false;
-                    wordIndex = (wordIndex + 1) % words.length;
-                }
-            }
-            setTimeout(typeWriter, deleting ? 50 : 100);
-        }
-        setTimeout(typeWriter, 1000);
-
-        // COMPTEUR ANIMÉ
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-
                     if (entry.target.classList.contains('count')) {
                         const target = parseInt(entry.target.dataset.target);
                         let count = 0;
@@ -212,19 +149,8 @@
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.scroll-reveal, .count').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.scroll-reveal, .count').forEach(el => observer.observe(el));
 
-        // COMPTEUR BADGE
-        let compteur = 1247;
-        document.getElementById('compteur').textContent = compteur.toLocaleString();
-
-        // ANIMATIONS HERO
-        setTimeout(() => document.querySelector('.animate-subtitle').classList.add('visible'), 400);
-        setTimeout(() => document.querySelector('.animate-form').classList.add('visible'), 700);
-
-        // INSCRIPTION
         async function inscrire() {
             const input = document.getElementById('email-input');
             const email = input.value.trim();
@@ -235,7 +161,6 @@
                 message.style.color = 'red';
                 return;
             }
-
             if (!email.includes('@') || !email.includes('.')) {
                 message.textContent = '❌ Email invalide !';
                 message.style.color = 'red';
@@ -248,13 +173,9 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email })
                 });
-
                 const data = await response.json();
-
                 if (data.succès) {
-                    compteur++;
-                    document.getElementById('compteur').textContent = compteur.toLocaleString();
-                    message.textContent = '🔥 Bienvenue dans l\'aventure !';
+                    message.textContent = '🔥 Merci ! On te recontacte vite.';
                     message.style.color = '#FFD700';
                     input.value = '';
                 }
